@@ -3,3 +3,6 @@
 *.log
 .pytest_cache/
 __pycache__/
+bin
+include
+lib
