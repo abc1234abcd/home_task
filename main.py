@@ -36,9 +36,9 @@ class PortfolioPriceCalculator:
                             portf_definition_set.add(curr_definition)
                         else:
                             name, weight = str(splits[0]), float(splits[1])
-                            #flatten nested portfolios
+                            #flatten nested portfolios: recursive
                             if name in portf_definition_set:
-                                nested_portf = { k : float(v)*weight for k, v in self.portfolios[name].items()}
+                                nested_portf = { k : float(v)*weight for key, value in self.portfolios[name].items() for k, v in ({key: value}.items() if not isinstance(value, dict) else {k:float(v)*weight for k, v in value.items()}.items())}
                                 self.portfolios[curr_definition].update(nested_portf)
                             else:
                                 self.portfolios[curr_definition][name] = weight
